@@ -52,3 +52,8 @@ body,button,input,select,textarea,h1,h2,h3,h4,strong,b{font-family:var(--mono);f
 .viewer-stage.is-panning img{will-change:transform;}
 @media(min-width:1400px){.site-header,.album-title-row{padding-left:44px;padding-right:44px;}}
 @media(max-width:600px){.site-header{height:100px;padding:0 19px;gap:12px;}.wordmark{font-size:19px;letter-spacing:-.8px;}.header-right{font-size:19px;}.album-title-row{padding:35px 19px 12px;font-size:20px;}.view-link{font-size:20px;}}
+
+/* The four index labels share exactly one responsive type size. */
+:root{--archive-type-size:22px;}
+.site-header .wordmark,.site-header .menu-open,.album-title-row,.album-title-row h2,.album-title-row .view-link{font-size:var(--archive-type-size);font-weight:400;}
+@media(max-width:600px){:root{--archive-type-size:20px;}}
