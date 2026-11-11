@@ -28,3 +28,10 @@
 @media(max-width:600px){.album-carousel{height:clamp(240px,67vw,360px)}.carousel-meta{gap:7px}.carousel-nav{font-size:13px}.swipe-hint{font-size:6px;letter-spacing:.5px;margin-right:1px}.album-meta{align-items:center;}}
 
 .album-carousel:focus-visible{outline:1px solid #212121;outline-offset:-1px}
+
+/* The photo owns its gestures; page zoom remains available outside the viewer. */
+.viewer-stage{position:relative;display:block;overflow:hidden;touch-action:none;overscroll-behavior:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:zoom-in;}
+.viewer-stage img,.viewer-stage.zoomed img{position:absolute;left:50%;top:50%;width:1px;height:1px;max-width:none;max-height:none;object-fit:contain;transform-origin:center;will-change:transform;pointer-events:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;transition:none;}
+.viewer-stage.is-zoomed{cursor:grab;}
+.viewer-stage.is-zoomed.is-panning{cursor:grabbing;}
+.viewer-tools{font-variant-numeric:tabular-nums;}
