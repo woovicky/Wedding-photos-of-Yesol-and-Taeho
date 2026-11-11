@@ -8,3 +8,23 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 
 .menu-panel[open]{display:flex;flex-direction:column}.menu-bottom{margin-top:auto;min-height:110px;flex:1}.menu-nav{flex-shrink:0}.menu-header{flex-shrink:0}
+
+/* The index browses every photo horizontally; VIEW opens the album grid. */
+.album-carousel{display:flex;height:clamp(300px,49vw,660px);overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:auto;cursor:grab;touch-action:pan-x pan-y pinch-zoom;}
+.album-carousel::-webkit-scrollbar{display:none}
+.carousel-photo{height:100%;width:auto;aspect-ratio:var(--photo-ratio,2/3);flex:0 0 auto;display:block;overflow:hidden;border:0;border-right:1px solid #ffffff;padding:0;margin:0;background:#f2f2f2;cursor:inherit;}
+.carousel-photo:last-child{border-right:0}
+.carousel-photo img{width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;}
+.carousel-photo:focus-visible{outline:2px solid #212121;outline-offset:-4px;}
+.album-carousel.is-dragging{cursor:grabbing;user-select:none;}
+.carousel-placeholder{height:100%;flex:0 0 33.333333%;border-right:1px solid #ffffff;}
+.carousel-placeholder:last-child{border-right:0}
+.album-carousel.is-empty{cursor:default;}
+.carousel-meta{display:flex;align-items:center;gap:12px;}
+.carousel-nav{padding:0 3px;border:0;background:transparent;font:15px/1 var(--mono);cursor:pointer;}
+.carousel-nav:disabled{opacity:.25;cursor:default;}
+.swipe-hint{font-size:8px;color:#858585;letter-spacing:1px;margin-right:5px;}
+@media(min-width:1400px){.album-carousel{height:min(52vw,790px)}}
+@media(max-width:600px){.album-carousel{height:clamp(240px,67vw,360px)}.carousel-meta{gap:7px}.carousel-nav{font-size:13px}.swipe-hint{font-size:6px;letter-spacing:.5px;margin-right:1px}.album-meta{align-items:center;}}
+
+.album-carousel:focus-visible{outline:1px solid #212121;outline-offset:-1px}
