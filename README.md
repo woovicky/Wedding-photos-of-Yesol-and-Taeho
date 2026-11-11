@@ -10,6 +10,7 @@
 4. 간단한 방법: 저장소 **Settings → Pages → Build and deployment → Source → Deploy from a branch → main / (root)** 를 선택해 저장하세요. 별도 빌드 도구가 필요 없습니다.
 5. 선택 사항: GitHub Actions로 게시하려면 `assets/pages-workflow.txt`를 `.github/workflows/pages.yml`로 복사하고 **Source → GitHub Actions**를 선택하세요. 두 방법 중 하나만 사용하세요.
 6. GitHub가 보여주는 `https://계정이름.github.io/our-days/` 주소에서 확인하세요.
+7. https://woovicky.github.io/Wedding-photos-of-Yesol-and-Taeho/edit.html
 
 ## 2. 사진 추가와 수정
 
