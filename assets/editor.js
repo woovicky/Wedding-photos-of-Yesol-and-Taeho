@@ -2,7 +2,7 @@
  'use strict';
  const A=window.Archive,esc=A.escape,$=s=>document.querySelector(s),base=A.clone(window.ALBUM_DATA);let data=A.clone(base),activeId=null,busy=false,saveChain=Promise.resolve(),noticeTimer,drawTimer;const objectURLs=new Map();
  function notice(text){$('#notice').textContent=text;$('#notice').classList.add('show');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>$('#notice').classList.remove('show'),5000)}
- try{data=A.validate(await A.get('state','album')||base)}catch(e){notice(e.message)}if(data.title==='OUR DAYS')data.title='Yeasol&Taeho Wedding';activeId=data.albums[0]?.id||null;
+ try{data=A.validate(await A.get('state','album')||base)}catch(e){notice(e.message)}if(data.title==='OUR DAYS'||data.title==='Yeasol&Taeho Wedding')data.title='YEASOL&TAEHO WEDDING';activeId=data.albums[0]?.id||null;
  async function save(){const copy=A.clone(data);$('#save-status').textContent='기기에 저장하는 중';saveChain=saveChain.catch(()=>{}).then(()=>A.put('state','album',copy));try{await saveChain;$('#save-status').textContent='이 브라우저에 저장됨'}catch(e){$('#save-status').textContent='저장 실패 · 내보내기 필요';notice(e.message);throw e}}
  async function src(path){if(objectURLs.has(path))return objectURLs.get(path);const b=await A.get('files',path);if(b){const u=URL.createObjectURL(b);objectURLs.set(path,u);return u}return path}
  const active=()=>data.albums.find(a=>a.id===activeId);const uuid=()=>crypto.randomUUID?crypto.randomUUID():'p-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);

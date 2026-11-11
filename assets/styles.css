@@ -57,3 +57,5 @@ body,button,input,select,textarea,h1,h2,h3,h4,strong,b{font-family:var(--mono);f
 :root{--archive-type-size:22px;}
 .site-header:not(.editor-header) .wordmark,.site-header:not(.editor-header) .menu-open,.album-title-row,.album-title-row h2,.album-title-row .view-link{font-size:var(--archive-type-size);font-weight:400;}
 @media(max-width:600px){:root{--archive-type-size:20px;}}
+
+.album-title-row .view-link{font-size:calc(var(--archive-type-size) * .8);}

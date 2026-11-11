@@ -31,7 +31,7 @@ function createPhotoViewport(maxScale=6){
     try {const d=await A.get('state','album');if(d){data=A.validate(d);draft=true;for(const path of A.filePaths(data)){const b=await A.get('files',path);if(b){const u=URL.createObjectURL(b);objectURLs.push(u);resolved.set(path,u)}}}}catch(e){$('#notice').textContent=e.message;$('#notice').classList.add('show')}
   }
   const url=path=>resolved.get(path)||path;
-  const siteTitle=data.title==='OUR DAYS'?'Yeasol&Taeho Wedding':data.title;
+  const siteTitle=(data.title==='OUR DAYS'?'YEASOL&TAEHO WEDDING':data.title).toUpperCase();
   const photos=A.allPhotos(data);let shownPhotos=[],viewerIndex=0,lastFocus=null;
   $('#brand').textContent=siteTitle;$('#menu-brand').textContent=siteTitle;document.title=siteTitle;
   $('#header-count').textContent='['+String(photos.length).padStart(3,'0')+']';$('#menu-all').textContent='['+String(photos.length).padStart(3,'0')+'] VIEW ALL';
