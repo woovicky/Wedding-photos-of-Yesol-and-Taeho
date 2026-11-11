@@ -1,6 +1,6 @@
 # OUR DAYS — 우리 사진 아카이브
 
-흰색 바탕, 검정·회색의 모노톤과 모노스페이스 타이포그래피, 가는 구분선과 세 장씩 붙는 사진 목록으로 만든 GitHub Pages용 앨범입니다. 외부 데이터베이스와 유료 저장 API 없이 HTML/CSS/JavaScript와 사진 파일로 동작합니다.
+흰색 바탕, 검정·회색의 모노톤과 모노스페이스 타이포그래피, 가는 구분선과 좌우로 넘기는 사진 목록으로 만든 GitHub Pages용 앨범입니다. 외부 데이터베이스와 유료 저장 API 없이 HTML/CSS/JavaScript와 사진 파일로 동작합니다.
 
 ## 1. 처음 게시하기
 
@@ -10,7 +10,6 @@
 4. 간단한 방법: 저장소 **Settings → Pages → Build and deployment → Source → Deploy from a branch → main / (root)** 를 선택해 저장하세요. 별도 빌드 도구가 필요 없습니다.
 5. 선택 사항: GitHub Actions로 게시하려면 `assets/pages-workflow.txt`를 `.github/workflows/pages.yml`로 복사하고 **Source → GitHub Actions**를 선택하세요. 두 방법 중 하나만 사용하세요.
 6. GitHub가 보여주는 `https://계정이름.github.io/our-days/` 주소에서 확인하세요.
-7. https://woovicky.github.io/Wedding-photos-of-Yesol-and-Taeho/edit.html
 
 ## 2. 사진 추가와 수정
 
@@ -18,7 +17,7 @@
 
 - **사진 추가**: JPG, PNG, WebP 여러 장을 선택합니다. 긴 변 최대 2,200px의 JPG와 미리보기로 변환해 파일 크기를 줄입니다. 사진 한 장의 입력 한도는 40MB입니다. HEIC는 미리 JPG로 변환하세요.
 - **앨범**: 제목, 한글 이름, 설명, 순서를 바꾸거나 새 앨범을 추가할 수 있습니다.
-- **사진**: 설명, 앨범, 순서, 표지에서 보이는 위치를 바꿀 수 있습니다. 각 앨범의 첫 세 장이 첫 화면 표지입니다.
+- **사진**: 설명, 앨범, 순서, 표지에서 보이는 위치를 바꿀 수 있습니다. 메인에서는 각 앨범의 모든 사진을 좌우로 넘겨볼 수 있고, VIEW를 누르면 바둑판식 앨범이 열립니다.
 - **미리보기**: 편집 화면 상단의 PREVIEW는 현재 브라우저의 편집본을 보여줍니다.
 - **게시**: 내보내기에서 전체 앨범 ZIP을 내려받고, 압축을 풀어 기존 저장소의 같은 위치에 파일을 반영하세요. 저장소 변경이 게시되어야 가족이 보는 앨범도 바뀝니다.
 - **복원**: SITE SETTINGS에서 이 편집 화면이 내보낸 ZIP을 가져올 수 있습니다.
