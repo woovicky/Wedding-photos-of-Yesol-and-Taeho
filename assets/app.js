@@ -33,6 +33,10 @@ function createPhotoViewport(maxScale=6){
   const url=path=>resolved.get(path)||path;
   const siteTitle=(data.title==='OUR DAYS'?'YEASOL&TAEHO WEDDING':data.title).toUpperCase();
   const photos=A.allPhotos(data);let shownPhotos=[],viewerIndex=0,lastFocus=null;
+  let keyboardNavigation=false,returnViewerFocus=true;
+  document.addEventListener('keydown',()=>{keyboardNavigation=true;document.documentElement.classList.add('using-keyboard');},true);
+  document.addEventListener('pointerdown',()=>{keyboardNavigation=false;document.documentElement.classList.remove('using-keyboard');},true);
+
   $('#brand').textContent=siteTitle;$('#menu-brand').textContent=siteTitle;document.title=siteTitle;
   $('#header-count').textContent='['+String(photos.length).padStart(3,'0')+']';$('#menu-all').textContent='['+String(photos.length).padStart(3,'0')+'] VIEW ALL';
   $('#menu-albums').innerHTML=data.albums.map(a=>`<a class="menu-album-link" href="#album/${encodeURIComponent(a.id)}"><span>${esc(a.title)}</span><small>[${String(a.photos.length).padStart(3,'0')}]</small></a>`).join('');
@@ -50,7 +54,7 @@ function createPhotoViewport(maxScale=6){
       const album=hash==='all'?null:data.albums.find(a=>a.id===hash.slice(6));
       if(hash!=='all'&&!album){root.innerHTML='<div class="album-empty"><span>NOT FOUND.</span><p>이 앨범을 찾을 수 없어요.</p><a href="#">[BACK TO INDEX]</a></div>';return}
       shownPhotos=album?photos.filter(p=>p.albumId===album.id):photos;
-      root.innerHTML=`<section class="page-heading"><a class="back-link" href="#">← BACK TO INDEX</a><div class="page-title"><h1>${esc(album?album.title:'ALL PHOTOGRAPHS')}</h1><span class="counter">[${String(shownPhotos.length).padStart(3,'0')}]</span></div><p class="page-description">${esc(album?album.description||album.subtitle:'함께한 모든 순간들.')}</p></section>`+(shownPhotos.length?`<section class="photo-grid" aria-label="${esc(album?.subtitle||'전체 사진')}">${shownPhotos.map((p,i)=>`<figure class="photo-card"><button data-photo="${i}" aria-label="${esc((p.caption||p.filename||'사진')+' 크게 보기')}">${photoImage(p)}</button><figcaption><span class="photo-number">[${String(i+1).padStart(3,'0')}]</span><span class="caption-text">${esc(p.caption||'')}</span></figcaption></figure>`).join('')}</section>`:`<div class="album-empty"><span>[ NO PHOTOS YET ]</span><p>이곳에 우리의 사진을 차곡차곡 담을 예정이에요.</p></div>`);
+      root.innerHTML=`<section class="page-heading"><a class="back-link" href="#">← BACK TO INDEX</a><div class="page-title"><h1>${esc(album?album.title:'ALL PHOTOGRAPHS')}</h1></div></section>`+(shownPhotos.length?`<section class="photo-grid" aria-label="${esc(album?.subtitle||'전체 사진')}">${shownPhotos.map((p,i)=>`<figure class="photo-card"><button data-photo="${i}" aria-label="${esc((p.caption||p.filename||'사진')+' 크게 보기')}">${photoImage(p)}</button></figure>`).join('')}</section>`:`<div class="album-empty" role="status"><span>NO PHOTOS YET</span></div>`);
       root.querySelectorAll('[data-photo]').forEach(b=>b.onclick=()=>openViewer(Number(b.dataset.photo),b));
     }else{
       root.innerHTML=``+data.albums.map((a,n)=>`<section class="album-band"><div class="album-title-row"><div class="album-title-group"><h2><a href="#album/${encodeURIComponent(a.id)}">${esc(a.title)}</a></h2></div><a class="view-link" href="#album/${encodeURIComponent(a.id)}" aria-label="${esc(a.subtitle||a.title)} 앨범 보기">[VIEW]</a></div><div class="album-carousel ${a.photos.length?'':'is-empty'}" data-carousel="${esc(a.id)}" role="region" aria-roledescription="carousel" aria-label="${esc(a.subtitle||a.title)} 사진, 좌우로 넘겨보세요" tabindex="0">${a.photos.length?a.photos.map((p,i)=>`<button class="carousel-photo" data-carousel-photo="${i}" style="--photo-ratio:${photoRatio(p)}" aria-label="${esc((p.caption||p.filename||'사진')+' 크게 보기')}">${photoImage(p)}</button>`).join(''):[0,1,2].map(i=>`<div class="carousel-placeholder">${placeholder(a,i)}</div>`).join('')}</div></section>`).join('')+(data.albums.length?'':'<div class="empty-index">아직 앨범이 없어요.</div>');
@@ -135,8 +139,13 @@ function createPhotoViewport(maxScale=6){
   viewerImage.addEventListener('load',fitPhoto);viewerImage.draggable=false;
   new ResizeObserver(()=>{if($('#viewer').open){clearGesture();fitPhoto();}}).observe(stage);
   function showPhoto(){const p=shownPhotos[viewerIndex];if(!p)return;resetPhoto();viewerImage.src=url(p.src);viewerImage.alt=p.caption||p.filename||'앨범 사진';$('#viewer-caption').textContent=p.caption||'';$('#viewer-album').textContent=p.albumTitle;$('#viewer-count').textContent='['+String(viewerIndex+1).padStart(3,'0')+' / '+String(shownPhotos.length).padStart(3,'0')+']';$('#viewer-download').href=url(p.original||p.src);$('#viewer-download').download=p.original?p.filename||p.id+'.jpg':p.id+'.jpg';$('#viewer-prev').hidden=shownPhotos.length<2;$('#viewer-next').hidden=shownPhotos.length<2;if(viewerImage.complete)fitPhoto();}
-  function openViewer(i,trigger){lastFocus=trigger;viewerIndex=i;showPhoto();$('#viewer').showModal();lock();fitPhoto();}
-  function closeViewer(restore=true){clearGesture();$('#viewer').close();unlock();if(restore&&lastFocus?.isConnected)lastFocus.focus();viewerImage.removeAttribute('src');}
+  function openViewer(i,trigger){returnViewerFocus=true;lastFocus=trigger;viewerIndex=i;showPhoto();$('#viewer').showModal();lock();fitPhoto();}
+  function restorePhotoFocus(){
+    if(!returnViewerFocus||$('#viewer').open||!lastFocus?.isConnected)return;
+    if(keyboardNavigation)lastFocus.focus({preventScroll:true});else lastFocus.blur();
+  }
+  function closeViewer(restore=true){returnViewerFocus=restore;clearGesture();$('#viewer').close();unlock();restorePhotoFocus();viewerImage.removeAttribute('src');}
+  $('#viewer').addEventListener('close',restorePhotoFocus);
   function next(delta){viewerIndex=(viewerIndex+delta+shownPhotos.length)%shownPhotos.length;showPhoto();}
   $('#viewer-close').onclick=()=>closeViewer();$('#viewer').addEventListener('cancel',()=>{clearGesture();unlock();viewerImage.removeAttribute('src');});$('#viewer-prev').onclick=()=>next(-1);$('#viewer-next').onclick=()=>next(1);
   $('#viewer-zoom').onclick=()=>zoomTo(photoView.snapshot().scale>1.01?1:2.5);

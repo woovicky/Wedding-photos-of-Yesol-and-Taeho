@@ -59,3 +59,16 @@ body,button,input,select,textarea,h1,h2,h3,h4,strong,b{font-family:var(--mono);f
 @media(max-width:600px){:root{--archive-type-size:20px;}}
 
 .album-title-row .view-link{font-size:calc(var(--archive-type-size) * .8);}
+
+/* Album detail pages use the index typography and an uninterrupted photo grid. */
+.page-heading{border:0;padding-bottom:28px;}
+.page-title h1{font-size:var(--archive-type-size);font-weight:400;letter-spacing:-.8px;line-height:1.3;}
+.back-link{font-size:calc(var(--archive-type-size) * .8);}
+.page-description,.page-title .counter{display:none;}
+.photo-grid,.photo-card,.photo-card:nth-child(n),.album-empty{border:0;}
+.photo-card button,.carousel-photo{appearance:none;-webkit-appearance:none;border:0;border-radius:0;box-shadow:none;}
+.album-empty>span{font-size:var(--archive-type-size);letter-spacing:-.8px;}
+/* Returning from a pointer/touch-opened photo must not leave a focus frame. */
+.carousel-photo:focus,.carousel-photo:focus-visible,.photo-card button:focus,.photo-card button:focus-visible,.album-carousel:focus,.album-carousel:focus-visible{outline:none;box-shadow:none;}
+html.using-keyboard .carousel-photo:focus-visible,html.using-keyboard .photo-card button:focus-visible,html.using-keyboard .album-carousel:focus-visible{outline:2px solid #212121;outline-offset:-4px;}
+@media(hover:none){.photo-card button:hover img{transform:none;}}
