@@ -72,3 +72,11 @@ body,button,input,select,textarea,h1,h2,h3,h4,strong,b{font-family:var(--mono);f
 .carousel-photo:focus,.carousel-photo:focus-visible,.photo-card button:focus,.photo-card button:focus-visible,.album-carousel:focus,.album-carousel:focus-visible{outline:none;box-shadow:none;}
 html.using-keyboard .carousel-photo:focus-visible,html.using-keyboard .photo-card button:focus-visible,html.using-keyboard .album-carousel:focus-visible{outline:2px solid #212121;outline-offset:-4px;}
 @media(hover:none){.photo-card button:hover img{transform:none;}}
+
+/* Restore the original photo labels and caption spacing; only divider lines stay removed. */
+.page-heading{padding:38px 30px 15px;}
+.page-title{align-items:center;gap:16px;}
+.page-title h1{flex:1 1 auto;min-width:0;}
+.page-title .back-link{flex:0 0 auto;margin:0;white-space:nowrap;font-size:calc(var(--archive-type-size) * .8);}
+@media(min-width:1400px){.page-heading{padding-left:44px;padding-right:44px;}}
+@media(max-width:600px){.page-heading{padding:35px 19px 12px;}}
